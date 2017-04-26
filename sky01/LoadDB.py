@@ -10,6 +10,7 @@ import os
 import pymysql
 from datetime import datetime
 import pandas as pd
+import glob
 
 #%%
 # 1) Convert image key (in unix epoch time) to gregorian calander timestamp
@@ -42,9 +43,8 @@ connection.commit()
 # 3) Load image data into table
 #load the text file (first with \r\n line terminators
 root = "/data/skycamera/sky01/Data"
-ed = str(int(round(et/86400))) #current epoch day
-filename = '%s.txt' % ed
-filename = os.path.join(root, filename)
+filelist = glob.glob("%s/*.txt" % root)
+filename = max(filelist)
 print("Loading image data files")
 load_sql = "LOAD DATA LOCAL INFILE %s \
 INTO TABLE SKY402 \
