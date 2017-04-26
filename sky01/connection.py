@@ -12,7 +12,7 @@ import pymysql
 def getConnection():
     connection = pymysql.connect(host='localhost',
                                  user='sernmo',
-                                 password='mysqlpwd01',
+                                 password='m*********',
                                  db='stationdata',
                                  charset='utf8mb4',
                                  local_infile=True,
