@@ -8,11 +8,11 @@ Created on Fri Mar  3 15:14:37 2017
 import glob
 import connection
 
-#%% connect to the database
+#%% Connect to DB
 connection = connection.getConnection()
 cursor = connection.cursor()
     
-#%% Load image data into table
+#%% Load image data into DB
 root = "/data/skycamera/sky01/Data"
 filelist = glob.glob("%s/*.txt" % root)
 filename = max(filelist)
@@ -25,3 +25,4 @@ IGNORE 1 LINES;" #header
 cursor.execute(load_sql, (filename))    
 connection.commit()
 connection.close()
+
