@@ -42,12 +42,10 @@ for x in Bin_List:
     JOIN SIN402 s \
     ON FROM_UNIXTIME(c.ET) = s.Tm \
     WHERE ET = %s \
-    ORDER BY c.ET DESC;" 
+    ORDER BY c.ET DESC;" """ 
     cursor.execute(sqlQuery, (ImageID))    
     InfoLine = cursor.fetchall()
-    connection.close()"""
-    cursor.execute(sqlQuery)
-    InfoLine = cursor.fetchall()
+    connection.close()
     print(InfoLine)
     InfoLine[0] = ''
 
