@@ -1,3 +1,4 @@
+#%% 
 # Import libraries
 import numpy as np
 import glob
@@ -7,23 +8,28 @@ import pvlib
 import math
 import cv2
 
+#%%
 # --- Read directory content --- #
 Bin_List = glob.glob('RealTime/*.bin')
 JPEG_List = glob.glob('RealTime/*.jpeg')
 
+#%%
 # --- Select binary images who haven't been converted as a JPEG image --- #
 Bin_List = set([os.path.splitext(x)[0] for x in Bin_List])
 JPEG_List = set([os.path.splitext(x)[0] for x in JPEG_List])
 Bin_List = sorted(list(Bin_List.difference(JPEG_List)))
 
+#%%
 # --- Read image properties --- #
 Longitude,Latitude,Elevation,MeanT,MeanP,I0ref,Period,Factor,Width,Height = \
     [x.split('\t')[0] for x in open('CamSpec.txt').readlines()]
 mean_pressure = 1e2 * np.float(MeanP)   # Pressure in Pascals
 mean_temperature = np.float(MeanT)      # Temperature in degC
 
+#%%
 # --- Loop over the selected images --- #
 for x in Bin_List:
+    #%%
     # -- Get Image ID, time info and Day ID -- #
     ImageID = os.path.basename(x)
     posix_time = np.int(ImageID)
@@ -31,6 +37,7 @@ for x in Bin_List:
     local_date = dt.datetime.fromtimestamp(posix_time)
     DayID = (local_date - dt.datetime(1970, 1, 1)).days     # Number of days since epoch time
 
+    #%% MALCOLM: EDIT THIS
     # -- Read data associated to the current image -- #
     TxtFileName = 'Data/' + np.str(DayID) + '.txt'
     TxtFile = open(TxtFileName, 'r')
@@ -43,6 +50,7 @@ for x in Bin_List:
             break
     TxtFile.close()
 
+    #%% THE SCIENCE...
     # -- If information are found, process the data -- #
     if InfoLine[0] != '':
         # Get sun position
@@ -72,6 +80,7 @@ for x in Bin_List:
             TxtFileID.write('\t'.join(str(s) for s in y) + '\n')
         TxtFileID.close()
 
+        #%% IMAGE PROCESSING...
         # Read the binary image
         Raw = np.fromfile(x + '.bin', dtype='uint16').reshape(np.int(Width), np.int(Height))
 
