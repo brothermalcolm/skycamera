@@ -11,6 +11,7 @@ import pymysql
 from datetime import datetime
 import pandas as pd
 import glob
+import connection
 
 #%%
 # 1) Convert image key (in unix epoch time) to gregorian calander timestamp
@@ -22,18 +23,9 @@ print(ct)
 #%%
 # 2) Create table in seriscixi db to store image data, use sp
 
-def getConnection():
-    connection = pymysql.connect(host='localhost',
-                                 user='sernmo',
-                                 password='mysqlpwd01',
-                                 db='stationdata',
-                                 charset='utf8mb4',
-                                 local_infile=True,
-                                 cursorclass=pymysql.cursors.DictCursor)
-    return(connection)
 
 #connect to the database
-connection = getConnection()
+connection = connection.getConnection()
 cursor = connection.cursor()
 #cursor.callproc('sp_create_tbl_skycamera')
 
