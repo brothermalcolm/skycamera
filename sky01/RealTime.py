@@ -36,14 +36,7 @@ for x in Bin_List:
     # -- Read data associated to the current image -- #
     connection = connection.getConnection()     # Connect to DB
     cursor = connection.cursor()
-    sqlQuery = """
-    SELECT * \
-    FROM SKY402 c \
-    JOIN SIN402 s \
-    ON FROM_UNIXTIME(c.ET) = s.Tm \
-    WHERE ET = %s \
-    ORDER BY c.ET DESC; """ 
-    cursor.execute(sqlQuery, (ImageID))    
+    cursor.callproc("sp_join_skyghi", (ImageID))
     InfoLine = cursor.fetchall()
     connection.close()
     print(InfoLine)
