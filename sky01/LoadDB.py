@@ -19,7 +19,7 @@ filename = max(filelist)
 tablename = 'SIN402'
 print("Loading image data files")
 load_sql = ("LOAD DATA LOCAL INFILE '%s' "
-            "REPLACE INTO TABLE %s " 
+            "INTO TABLE %s " 
             "FIELDS TERMINATED BY '\t' " 
             "LINES TERMINATED BY '\n' "
             "IGNORE 1 LINES; ")
