@@ -16,13 +16,14 @@ cursor = connection.cursor()
 root = "/data/skycamera/sky01/Data"
 filelist = glob.glob("%s/*.txt" % root)
 filename = max(filelist)
+tablename = 'SIN402'
 print("Loading image data files")
-load_sql = "LOAD DATA LOCAL INFILE %s \
-INTO TABLE SKY402 \
-FIELDS TERMINATED BY '\t' \
-LINES TERMINATED BY '\n' \
-IGNORE 1 LINES;" #header
-cursor.execute(load_sql, (filename))    
+load_sql = ("LOAD DATA LOCAL INFILE '%s' "
+            "REPLACE INTO TABLE %s " 
+            "FIELDS TERMINATED BY '\t' " 
+            "LINES TERMINATED BY '\n' "
+            "IGNORE 1 LINES; ")
+cursor.execute(load_sql % (filename, tablename))    
 connection.commit()
 connection.close()
 
