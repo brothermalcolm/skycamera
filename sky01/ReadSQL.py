@@ -28,4 +28,4 @@ def read_sql(ImageID, VarName):
         conn.close()
         return result
     except:
-        print('Have you mispelled the variable name?')
+        return 'NaN'
